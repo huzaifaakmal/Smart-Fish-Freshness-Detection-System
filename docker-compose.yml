@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=fish_db
+      - POSTGRES_USER=fish_user
+      - POSTGRES_PASSWORD=fish_password
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://fish_user:fish_password@db:5432/fish_db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    # Placeholder for frontend dockerization
+    image: node:20-slim
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: "npm run dev" # Assuming Next.js
+
+volumes:
+  postgres_data:

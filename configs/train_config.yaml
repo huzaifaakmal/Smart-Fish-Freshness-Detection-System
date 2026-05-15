@@ -1,0 +1,17 @@
+training:
+  model_name: "efficientnet_b3"
+  batch_size: 16
+  epochs: 50
+  learning_rate: 0.001
+  img_size: 224
+  patience: 10
+  mixed_precision: true
+  save_dir: "models/checkpoints"
+
+dataset:
+  csv_path: "dataset/fish_metadata.csv"
+  min_samples_per_class: 7
+
+logging:
+  log_dir: "logs"
+  tensorboard: true
